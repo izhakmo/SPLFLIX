@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include "Action.h"
+using namespace std;
 
 class User;
 class Watchable;
@@ -15,6 +16,7 @@ public:
     ~Session();
     void start();
     std::unordered_map<std::string,User*> getUserMap();
+    User* searchUser(string name);
 private:
     std::vector<Watchable*> content;
     std::vector<BaseAction*> actionsLog;
