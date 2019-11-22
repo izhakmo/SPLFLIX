@@ -27,6 +27,7 @@ public:
     LengthRecommenderUser(const std::string& name);
     virtual Watchable* getRecommendation(Session& s);
 private:
+    const int numSeen;
 };
 
 class RerunRecommenderUser : public User {
