@@ -66,7 +66,7 @@ Episode::Episode(long id, const string &seriesName, int length, int season, int 
 string Episode::getEpisodeNumber() const {return "S"+to_string(season)+"E"+to_string(episode);}
 string Episode::getSeriesName() const {return seriesName;}
 string Episode::toString() const {return getSeriesName()+" "+ getEpisodeNumber()+" "+to_string(getLength())+" minutes "+tagsToString();}
-
+long Episode::getNextEpisodeId() const {}
 
 //
 
