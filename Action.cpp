@@ -121,15 +121,30 @@ string PrintActionsLog::toString() const {
     return toReturn;
 }
         
-  //PrintWatchHistory========
-        void PrintWatchHistory::act(Session &sess) {
-        User* tmp=sess.getActiveUser();
+  //PrintWatchHistory=====================================
 
-        cout<< "Watch history for "<<&tmp.getName()<<endl;
-        int i=1;
-        for(vector<Watchable*>::iterator it= tmp->get_history().begin();it!=tmp->get_history().end();++it){
-            cout << to_string(i) + ". " << *it<<endl;
-            i++;
-        }
+PrintWatchHistory::PrintWatchHistory() {
+    BaseAction::setErrorMsg("Unable to print the watch history");
+    setStatus(PENDING);
+}
 
+  void PrintWatchHistory::act(Session &sess) {
+       User* tmp=sess.getActiveUser();
+
+       cout<< "Watch history for "<<&tmp.getName()<<endl;
+       int i=1;
+       for(vector<Watchable*>::iterator it= tmp->get_history().begin();it!=tmp->get_history().end();++it){
+           cout << to_string(i) + ". " << *it<<endl;
+           i++;
+       }
     }
+string PrintWatchHistory::toString() const {
+    string toReturn;
+    if(getStatus()==COMPLETED){
+        toReturn = "PrintWatchHistory COMPLETED";
+    }
+    else{
+        toReturn = "PrintWatchHistory ERROR: "+getErrorMsg();
+    }
+    return toReturn;
+}
