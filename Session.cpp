@@ -43,6 +43,10 @@ void Session::pushToActionLog(BaseAction *action) {
     actionsLog.push_back (action);
 }
 
+vector<Watchable*> Session::getContentVector() {
+    return content;
+}
+
 
 //
 
