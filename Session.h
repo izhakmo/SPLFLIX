@@ -17,10 +17,16 @@ public:
     void start();
     std::unordered_map<std::string,User*> getUserMap();
     User* searchUser(string name);
+    string getUserChange();// Get the reqUserChange
+    void setUserChange(string user);
+    void setActiveUser(User* user);
+    void pushToActionLog(BaseAction *action);
 private:
     std::vector<Watchable*> content;
     std::vector<BaseAction*> actionsLog;
     std::unordered_map<std::string,User*> userMap;
     User* activeUser;
+    string reqUserChange;// New field for changeUser
+
 };
 #endif
