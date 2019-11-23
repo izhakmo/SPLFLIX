@@ -21,6 +21,8 @@ public:
     void setUserChange(string user);
     void setActiveUser(User* user);
     void pushToActionLog(BaseAction *action);
+    
+    vector<Watchable*> getContentVector() ;
 private:
     std::vector<Watchable*> content;
     std::vector<BaseAction*> actionsLog;
