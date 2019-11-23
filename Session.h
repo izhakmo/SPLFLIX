@@ -29,6 +29,8 @@ private:
     std::unordered_map<std::string,User*> userMap;
     User* activeUser;
     string reqUserChange;// New field for changeUser
+    string needToDelete;//New field for DeleteUser
+
 
 };
 #endif
