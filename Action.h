@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+using namespace std;
 
 class Session;
 
@@ -13,36 +14,43 @@ enum ActionStatus{
 
 class BaseAction{
 public:
-	BaseAction();
-	ActionStatus getStatus() const;
+	BaseAction();//   Done?
+	ActionStatus getStatus() const;// Done
 	virtual void act(Session& sess)=0;
 	virtual std::string toString() const=0;
-	virtual void setStatus(ActionStatus stat);
-	void setErrorMsg(string error);//  Set ERROR MSG
-        string printError();//Print 
+	void setStatus(ActionStatus stat);//Done
+    std::string getErrorMsg();
+    void setErrorMsg(string error);//  Set ERROR MSG
+
+
+
 protected:
 	void complete();
 	void error(const std::string& errorMsg);
-	std::string getErrorMsg() const;
+    std::string getErrorMsg() const ;
+
 private:
-	std::string errorMsg;
-	ActionStatus status;
+	std::string errorMsg;//    First field
+	ActionStatus status;//     Second field
 };
 
 class CreateUser  : public BaseAction {
 public:
+    CreateUser();//CreateUser Constructor
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
 
 class ChangeActiveUser : public BaseAction {
 public:
+    ChangeActiveUser();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
 
 class DeleteUser : public BaseAction {
 public:
+    DeleteUser();
 	virtual void act(Session & sess);
 	virtual std::string toString() const;
 };
