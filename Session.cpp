@@ -47,6 +47,20 @@ vector<Watchable*> Session::getContentVector() {
     return content;
 }
 
+vector<BaseAction*> Session::getActionsLog() {
+    return actionsLog;
+}
+string Session::getUserToDelete() {//Get the needToDelete field
+    return needToDelete;
+}
+
+void Session::setNeedToDelete(string user) {
+    needToDelete=user;
+}
+
+string Session::getUserToDelete() {//Get the needToDelete field
+    return needToDelete;
+}
 
 //
 
