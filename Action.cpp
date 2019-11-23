@@ -71,13 +71,14 @@ void ChangeActiveUser::act(Session &sess) {
     setStatus(PENDING);
     }   
 
-    void PrintContentList::act(Session &sess) {
-    vector<Watchable*> printer=sess.getContentVector();
-    for(vector<Watchable*>::iterator it=printer.begin();it !=printer.end();++it){
+     void PrintContentList::act(Session &sess) {
+        vector<Watchable *> printer = sess.getContentVector();
         int i=1;
-        cout<< to_string(i)+". " << *it<<endl;
-    }
-        
+        for (vector<Watchable *>::iterator it = printer.begin(); it != printer.end(); ++it) {
+            cout << to_string(i) + ". " << *it << endl;
+            i++;
+        }
+    }   
     string PrintContentList::toString() const {
     string toReturn;
     if(getStatus()==COMPLETED){
@@ -120,4 +121,15 @@ string PrintActionsLog::toString() const {
     return toReturn;
 }
         
+  //PrintWatchHistory========
+        void PrintWatchHistory::act(Session &sess) {
+        User* tmp=sess.getActiveUser();
 
+        cout<< "Watch history for "<<&tmp.getName()<<endl;
+        int i=1;
+        for(vector<Watchable*>::iterator it= tmp->get_history().begin();it!=tmp->get_history().end();++it){
+            cout << to_string(i) + ". " << *it<<endl;
+            i++;
+        }
+
+    }
