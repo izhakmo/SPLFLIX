@@ -8,10 +8,12 @@
 #include <queue>
 class Watchable;
 class Session;
+using namespace std;
 
 class User{
 public:
     User(const std::string& name);
+    virtual ~User();
     virtual Watchable* getRecommendation(Session& s) = 0;
     std::string getName() const;
     std::vector<Watchable*> get_history() const;
@@ -30,6 +32,7 @@ public:
 private:
     int average;
     int numSeen;
+
 };
 
 class RerunRecommenderUser : public User {
@@ -46,6 +49,7 @@ public:
     GenreRecommenderUser(const std::string& name);
     virtual Watchable* getRecommendation(Session& s);
 private:
+    vector<string,int > genre;
 };
 
 #endif
