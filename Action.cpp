@@ -10,6 +10,13 @@ void BaseAction:: error(const std::string &errorMsg) {}  //TODO
 std::string BaseAction:: getErrorMsg() const { return errorMsg;} //TODO
 void BaseAction:: setStatus(ActionStatus stat){ status=stat;}
 
+void BaseAction::setErrorMsg(string error) {
+    errorMsg=error;
+}
+
+string BaseAction::printError() {
+    string msg = getStatus()+" - "+getErrorMsg();
+}
 
 
 void CreateUser::act(Session &sess) {
@@ -30,6 +37,31 @@ void CreateUser::act(Session &sess) {
     }   //TODO  if we got here, then we got an error
     setStatus(ERROR);
 
+    // ChangeActiveUser
+
+ChangeActiveUser::ChangeActiveUser() {
+    BaseAction::setErrorMsg("Unable to change user");
+    setStatus(PENDING);
+    //To be continue
+}
+
+void ChangeActiveUser::act(Session &sess) {
+    string userName;
+    userName=sess.getUserChange();
+    User* userTemp = sess.searchUser(userName);
+    if(userTemp==nullptr){
+        this->setStatus(ERROR);
+
+        cout << printError() << endl;
+    }
+    else{
+        sess.setActiveUser(userTemp);
+        complete();
+    }
+    sess.setUserChange(nullptr);//NEED TO CHECK
+    sess.pushToActionLog(this);//NEED TO PUSH THE ACTION LOG TO THE ACTION LOG VECTOR
+
+}
 
 }
 //
