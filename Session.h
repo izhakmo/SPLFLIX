@@ -21,8 +21,11 @@ public:
     void setUserChange(string user);
     void setActiveUser(User* user);
     void pushToActionLog(BaseAction *action);
-    
-    vector<Watchable*> getContentVector() ;
+    vector<Watchable*> getContentVector();
+    void setNeedToDelete(string user);//set the needToDelete field
+    vector<BaseAction*>getActionsLog();//get the actions log vector
+    User* getActiveUser();
+
 private:
     std::vector<Watchable*> content;
     std::vector<BaseAction*> actionsLog;
