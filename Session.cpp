@@ -26,6 +26,23 @@ User*Session::searchUser(string name) {
     return userPtr;
 }
 
+string Session::getUserChange(){
+    return reqUserChange;
+}
+
+void Session::setActiveUser(User *user) {
+    this->activeUser=user;
+
+}
+
+void Session::setUserChange(string user) {//Change the reqUserChange
+    reqUserChange=user;
+}
+
+void Session::pushToActionLog(BaseAction *action) {
+    actionsLog.push_back (action);
+}
+
 
 //
 
