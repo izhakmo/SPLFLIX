@@ -2,12 +2,23 @@
 
 //
 // Created by izhakmo on 20/11/2019.
+using namespace std;
 
 //Constructor
 Watchable::Watchable(long id, int length, const std::vector<std::string>& tags)
 :_id(id),_length(length){
     _tags=tags;
 
+}
+
+string Watchable::tagsToString() const{
+    string tag="[";
+    for(auto iter=_tags.begin() ;   iter !=_tags.end()-1  ;   iter++){
+        tag=tag+*iter+", ";
+    }
+    tag=tag+_tags.back()+"]";
+
+    return tag;
 }
 
 //getters
@@ -41,13 +52,20 @@ Watchable &Watchable::operator=(const Watchable &watch){
 
 
 
-Movie::Movie(long id, const std::string &name, int length, const std::vector<std::string> &tags)
+Movie::Movie(long id, const string &name, int length, const std::vector<std::string> &tags)
 :name(name),Watchable(id,length,tags){} //Constructor
 
+string Movie::getName() const {return name;}
 
-Episode::Episode(long id, const std::string &seriesName, int length, int season, int episode,const std::vector<std::string> &tags)
+string Movie::toString() const {return getName()+" "+ to_string(getLength())+" minutes "+tagsToString();}
+
+
+Episode::Episode(long id, const string &seriesName, int length, int season, int episode,const std::vector<std::string> &tags)
 :Watchable(id,length,tags),seriesName(seriesName),season(season),episode(episode),nextEpisodeId(){} //TODO NEXTEPISODEID MUST BE CHECKED
 
+string Episode::getEpisodeNumber() const {return "S"+to_string(season)+"E"+to_string(episode);}
+string Episode::getSeriesName() const {return seriesName;}
+string Episode::toString() const {return getSeriesName()+" "+ getEpisodeNumber()+" "+to_string(getLength())+" minutes "+tagsToString();}
 
 
 //

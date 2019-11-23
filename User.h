@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include <queue>
 class Watchable;
 class Session;
 
@@ -27,7 +28,8 @@ public:
     LengthRecommenderUser(const std::string& name);
     virtual Watchable* getRecommendation(Session& s);
 private:
-    const int numSeen;
+    int average;
+    int numSeen;
 };
 
 class RerunRecommenderUser : public User {
@@ -35,6 +37,8 @@ public:
     RerunRecommenderUser(const std::string& name);
     virtual Watchable* getRecommendation(Session& s);
 private:
+    std::queue<Watchable*> recommendations;
+
 };
 
 class GenreRecommenderUser : public User {
