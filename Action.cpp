@@ -64,5 +64,12 @@ void ChangeActiveUser::act(Session &sess) {
 }
 
 }
+    //PrintContentList==========
+    void PrintContentList::act(Session &sess) {
+    vector<Watchable*> printer=sess.getContentVector();
+    for(vector<Watchable*>::iterator it=printer.begin();it !=printer.end();++it){
+        int i=1;
+        cout<< to_string(i)+". " << *it<<endl;
+    }
 //
 
