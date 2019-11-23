@@ -65,11 +65,59 @@ void ChangeActiveUser::act(Session &sess) {
 
 }
     //PrintContentList==========
+
+    PrintContentList::PrintContentList(){
+    BaseAction::setErrorMsg("Unable to print the content list");
+    setStatus(PENDING);
+    }   
+
     void PrintContentList::act(Session &sess) {
     vector<Watchable*> printer=sess.getContentVector();
     for(vector<Watchable*>::iterator it=printer.begin();it !=printer.end();++it){
         int i=1;
         cout<< to_string(i)+". " << *it<<endl;
     }
-//
+        
+    string PrintContentList::toString() const {
+    string toReturn;
+    if(getStatus()==COMPLETED){
+        toReturn = "PrintContentList COMPLETED";
+    }
+    else{
+        toReturn = "PrintContentList ERROR: "+getErrorMsg();
+    }
+    return toReturn;
+}   
+    
+
+////PrintActionsLog==========
+
+PrintActionsLog::PrintActionsLog(){
+    BaseAction::setErrorMsg("Unable to print the action log");
+    setStatus(PENDING);
+    //To be continue
+
+}
+
+void PrintActionsLog::act(Session &sess){
+    vector<BaseAction*> v1 = sess.getActionsLog();
+    for (vector<BaseAction*>::reverse_iterator i = v1.rbegin();
+         i != v1.rend(); ++i ){
+        BaseAction* action1 = *i;
+        string toPrint = action1->toString();
+        cout << toPrint << endl;
+    }
+}
+
+string PrintActionsLog::toString() const {
+    string toReturn;
+    if(getStatus()==COMPLETED){
+        toReturn = "PrintActionsLog COMPLETED";
+    }
+    else{
+        toReturn = "PrintActionsLog ERROR: "+getErrorMsg();
+    }
+    return toReturn;
+}
+        
 
