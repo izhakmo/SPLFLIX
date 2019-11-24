@@ -62,5 +62,45 @@ string Session::getUserToDelete() {//Get the needToDelete field
     return needToDelete;
 }
 
+
+void Session::start() {
+    string input;
+    cin >> input;
+    string delimiter = " ";
+    string action = input.substr(0, input.find(delimiter));        //get the first word of the action
+    input = input.substr(input.find(delimiter));
+
+    if (action == "createuser")  //action= the first word of the input
+        CreateUser();
+    else if (action == "changeuser")
+        ChangeActiveUser();
+    else if (action == "deleteuser")
+        DeleteUser();
+    else if (action == "dupuser")
+        DuplicateUser();
+    else if (action == "content")  //TODO check the delimiter func if it doesn't apear
+        PrintContentList();
+    else if (action == "watchlist")
+        PrintWatchHistory();
+    else if (action == "watch")
+        Watch();
+    else if (action == "log")
+        PrintActionsLog();
+    else if (action == "exit")
+        Exit();
+    else    //TODO ADD
+                    
+
+    //====================CreateUser
+//    CreateUser::CreateUser(){   //i assume we should add an input string to the baseAction class, that should contain the input to each act
+//    }
+     void CreateUser::act(Session &sess) {
+        string delimiter=" ";
+        string userNameRequest=input.substr(0,input.find(delimiter));
+//        unordered_map<string,User*> &map=sess.getUserMap(); //reference, probably not needed
+        User &requestedUser=sess.searchUser(userNameRequest);
+
+
+    }
 //
 
