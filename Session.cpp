@@ -91,16 +91,54 @@ void Session::start() {
     else    //TODO ADD
                     
 
-    //====================CreateUser
+//====================CreateUser
 //    CreateUser::CreateUser(){   //i assume we should add an input string to the baseAction class, that should contain the input to each act
 //    }
      void CreateUser::act(Session &sess) {
         string delimiter=" ";
+        string input=sess.getInput();
         string userNameRequest=input.substr(0,input.find(delimiter));
+        string recAlgorithm=input.substr(input.find(delimiter));
 //        unordered_map<string,User*> &map=sess.getUserMap(); //reference, probably not needed
-        User &requestedUser=sess.searchUser(userNameRequest);
+        User *requestedUser=sess.searchUser(userNameRequest);   //return pointer to user with the same name or null if no such element exists
+        if(requestedUser== nullptr){    //this is a legal name
+
+            if(recAlgorithm=="gen"){    //creat
+                GenreRecommenderUser *addingUser=new GenreRecommenderUser(userNameRequest);
+                sess.getUserMap().insert(userNameRequest,*addingUser);
+                complete();
+
+            }
+            else if(recAlgorithm=="rer"){
+                RerunRecommenderUser *addingUser=new RerunRecommenderUser(userNameRequest);
+                sess.getUserMap().insert(userNameRequest,*addingUser);
+                complete();
+            }
+            else if(recAlgorithm=="len"){
+                LengthRecommenderUser *addingUser=new LengthRecommenderUser(userNameRequest);
+                sess.getUserMap().insert(userNameRequest,*addingUser);
+                complete();
+
+            }
+
+
+        }  else{ error("illegal reccomandation or already existed username");
+
+        }
+
 
 
     }
-//
 
+
+    //=======ChangeActiveUser
+    void ChangeActiveUser::act(Session &sess) {
+    string input=sess.getInput();
+        User *requestedUser=sess.searchUser(input);   //return pointer to user with the same name or null if no such element exists
+
+        if(requestedUser!= nullptr){    //this is a legal name
+            sess.setActiveUser(requestedUser);  //TODO ADD FLAG FOR HISTORY AND PRINT...
+            complete();
+            sess.pushToActionLog()
+
+        }
