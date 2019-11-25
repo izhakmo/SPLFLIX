@@ -88,10 +88,14 @@ void Session::start() {
         PrintActionsLog();
     else if (action == "exit")
         Exit();
-    else    //TODO ADD
-                    
+    //else    //TODO ADD ERRORS
 
-//====================CreateUser
+
+}
+
+
+
+    //====================CreateUser
 //    CreateUser::CreateUser(){   //i assume we should add an input string to the baseAction class, that should contain the input to each act
 //    }
      void CreateUser::act(Session &sess) {
@@ -105,18 +109,18 @@ void Session::start() {
 
             if(recAlgorithm=="gen"){    //creat
                 GenreRecommenderUser *addingUser=new GenreRecommenderUser(userNameRequest);
-                sess.getUserMap().insert(userNameRequest,*addingUser);
+                sess.AddNewUserToMap(userNameRequest,(*GenreRecommenderUser)addingUser);  //TODO
                 complete();
 
             }
             else if(recAlgorithm=="rer"){
                 RerunRecommenderUser *addingUser=new RerunRecommenderUser(userNameRequest);
-                sess.getUserMap().insert(userNameRequest,*addingUser);
+                sess.AddNewUserToMap(userNameRequest,(RerunRecommenderUser*)addingUser);
                 complete();
             }
             else if(recAlgorithm=="len"){
                 LengthRecommenderUser *addingUser=new LengthRecommenderUser(userNameRequest);
-                sess.getUserMap().insert(userNameRequest,*addingUser);
+                sess.AddNewUserToMap(userNameRequest,(LengthRecommenderUser*)addingUser);
                 complete();
 
             }
@@ -133,12 +137,66 @@ void Session::start() {
 
     //=======ChangeActiveUser
     void ChangeActiveUser::act(Session &sess) {
-    string input=sess.getInput();
-        User *requestedUser=sess.searchUser(input);   //return pointer to user with the same name or null if no such element exists
+        string input = sess.getInput();
+        User *requestedUser = sess.searchUser(
+                input);   //return pointer to user with the same name or null if no such element exists
 
-        if(requestedUser!= nullptr){    //this is a legal name
+        if (requestedUser != nullptr) {    //this is a legal name
             sess.setActiveUser(requestedUser);  //TODO ADD FLAG FOR HISTORY AND PRINT...
             complete();
-            sess.pushToActionLog()
+//            sess.pushToActionLog(); //TODO
 
         }
+    }
+
+    void Session::AddNewUserToMap(string name, User *user_ptr) {    //TODO ADDED, CHECK IT
+    pair<string,User*> adder(name,user_ptr);
+    userMap.insert(adder);
+}
+
+
+
+
+
+
+//===========allGenere========
+vector <string,int> Session::AllGeners() {
+    vector<Watchable*> allContent=getContentVector();
+    vector<string,int> Allgenres;
+    int i=0;
+    for(vector<Watchable*>::iterator it=allContent.begin(); it!=allContent.end();++it){
+
+        vector<string> tags;
+        for(int i=0;i<tags.size();i++){
+            tags.at(i);
+        }
+    }
+
+}
+
+void DuplicateUser::act(Session &sess) {
+    string delimiter=" ";
+    string input=sess.getInput();
+    string UserToCopy=input.substr(0,input.find(delimiter));    //first word
+    string NewUserName=input.substr(input.find(delimiter));     //second word
+    User *requestedUser=sess.searchUser(UserToCopy);   //return pointer to user with the same name or null if no such element exists
+    if(requestedUser!= nullptr){    //this is a legal name
+        User *newName=sess.searchUser(NewUserName);
+
+        if(newName== nullptr){  //no user with the new name
+            string userReqType=requestedUser->getUserRecType(); //string with len, rer or gen
+            if(userReqType=="gen"){
+                GenreRecommenderUser CopyAcount(NewUserName,(GenreRecommenderUser*)requestedUser);  //TODO CHECK
+            }
+            else if(userReqType=="rer"){
+                RerunRecommenderUser CopyAcount(NewUserName,(RerunRecommenderUser*)requestedUser);
+            }
+            else{
+                LengthRecommenderUser CopyAcount(NewUserName,(LengthRecommenderUser*)requestedUser);
+            }
+                //TODO ADD FLAG AND ADD TO HISTORY
+                complete();
+        }
+//        else{error();}  //todo
+    }
+//    else{error();}
