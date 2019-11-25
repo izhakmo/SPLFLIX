@@ -13,10 +13,13 @@ using namespace std;
 class User{
 public:
     User(const std::string& name);
+    User(string,User*);
     virtual ~User();
     virtual Watchable* getRecommendation(Session& s) = 0;
     std::string getName() const;
     std::vector<Watchable*> get_history() const;
+
+    virtual string getUserRecType()=0;
 protected:
     std::vector<Watchable*> history;
 private:
@@ -28,7 +31,9 @@ private:
 class LengthRecommenderUser : public User {
 public:
     LengthRecommenderUser(const std::string& name);
+    LengthRecommenderUser(string,LengthRecommenderUser*);
     virtual Watchable* getRecommendation(Session& s);
+    virtual string getUserRecType();
 private:
     int average;
     int numSeen;
@@ -38,7 +43,9 @@ private:
 class RerunRecommenderUser : public User {
 public:
     RerunRecommenderUser(const std::string& name);
+    RerunRecommenderUser(string,RerunRecommenderUser*);
     virtual Watchable* getRecommendation(Session& s);
+    virtual string getUserRecType();
 private:
     std::queue<Watchable*> recommendations;
 
@@ -47,7 +54,9 @@ private:
 class GenreRecommenderUser : public User {
 public:
     GenreRecommenderUser(const std::string& name);
+    GenreRecommenderUser(string,GenreRecommenderUser*);
     virtual Watchable* getRecommendation(Session& s);
+    virtual string getUserRecType();
 private:
     vector<string,int > genre;
 };
