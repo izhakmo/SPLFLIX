@@ -15,11 +15,14 @@ enum ActionStatus{
 class BaseAction{
 public:
 	BaseAction();//   Done?
+    virtual ~BaseAction();
+	virtual BaseAction* clone()=0;
+	BaseAction(const BaseAction &action);
 	ActionStatus getStatus() const;// Done
 	virtual void act(Session& sess)=0;
 	virtual std::string toString() const=0;
 	void setStatus(ActionStatus stat);//Done
-    std::string getErrorMsg();
+    //std::string getErrorMsg();
     void setErrorMsg(string error);//  Set ERROR MSG
 
 
@@ -37,6 +40,8 @@ private:
 class CreateUser  : public BaseAction {
 public:
     CreateUser();//CreateUser Constructor
+    ~CreateUser();
+    CreateUser* clone();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
@@ -44,6 +49,8 @@ public:
 class ChangeActiveUser : public BaseAction {
 public:
     ChangeActiveUser();
+    ~ChangeActiveUser();
+    ChangeActiveUser* clone();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
@@ -51,25 +58,36 @@ public:
 class DeleteUser : public BaseAction {
 public:
     DeleteUser();
-	virtual void act(Session & sess);
+    ~DeleteUser();
+	DeleteUser* clone();
+    virtual void act(Session & sess);
 	virtual std::string toString() const;
 };
 
 
 class DuplicateUser : public BaseAction {
 public:
+    DuplicateUser();
+    ~DuplicateUser();
+    DuplicateUser* clone();
 	virtual void act(Session & sess);
 	virtual std::string toString() const;
 };
 
 class PrintContentList : public BaseAction {
 public:
+    PrintContentList();
+    ~PrintContentList();
+    PrintContentList* clone();
 	virtual void act (Session& sess);
 	virtual std::string toString() const;
 };
 
 class PrintWatchHistory : public BaseAction {
 public:
+    PrintWatchHistory();
+    ~PrintWatchHistory();
+    PrintWatchHistory* clone();
 	virtual void act (Session& sess);
 	virtual std::string toString() const;
 };
@@ -77,6 +95,9 @@ public:
 
 class Watch : public BaseAction {
 public:
+    Watch();
+    ~Watch();
+    Watch* clone();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
@@ -84,12 +105,18 @@ public:
 
 class PrintActionsLog : public BaseAction {
 public:
+    PrintActionsLog();
+    ~PrintActionsLog();
+    PrintActionsLog* clone();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
 
 class Exit : public BaseAction {
 public:
+    Exit();
+    ~Exit();
+    Exit* clone();
 	virtual void act(Session& sess);
 	virtual std::string toString() const;
 };
