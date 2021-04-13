@@ -70,25 +70,38 @@ void Session::start() {
     string action = input.substr(0, input.find(delimiter));        //get the first word of the action
     input = input.substr(input.find(delimiter));
 
-    if (action == "createuser")  //action= the first word of the input
-        CreateUser();
-    else if (action == "changeuser")
-        ChangeActiveUser();
-    else if (action == "deleteuser")
-        DeleteUser();
-    else if (action == "dupuser")
-        DuplicateUser();
-    else if (action == "content")  //TODO check the delimiter func if it doesn't apear
-        PrintContentList();
-    else if (action == "watchlist")
-        PrintWatchHistory();
-    else if (action == "watch")
-        Watch();
-    else if (action == "log")
-        PrintActionsLog();
-    else if (action == "exit")
-        Exit();
-    //else    //TODO ADD ERRORS
+    switch (action){
+        case "createuser":  //action= the first word of the input
+            CreateUser();
+            break;
+        case "changeuser":
+            ChangeActiveUser();
+            break;
+        case "deleteuser":
+            DeleteUser();
+            break;
+        case "dupuser":
+            DuplicateUser();
+            break;
+        case "content":
+            PrintContentList();
+            break;
+        case "watchlist":
+            PrintWatchHistory();
+            break;
+        case "watch":
+            Watch();
+            break;
+        case "log":
+            PrintActionsLog();
+            break;
+        case "exit":
+            Exit();
+            break;
+        default:
+            error("illegal input");
+        }
+
 
 
 }
@@ -103,13 +116,12 @@ void Session::start() {
         string input=sess.getInput();
         string userNameRequest=input.substr(0,input.find(delimiter));
         string recAlgorithm=input.substr(input.find(delimiter));
-//        unordered_map<string,User*> &map=sess.getUserMap(); //reference, probably not needed
         User *requestedUser=sess.searchUser(userNameRequest);   //return pointer to user with the same name or null if no such element exists
         if(requestedUser== nullptr){    //this is a legal name
 
             if(recAlgorithm=="gen"){    //creat
                 GenreRecommenderUser *addingUser=new GenreRecommenderUser(userNameRequest);
-                sess.AddNewUserToMap(userNameRequest,(*GenreRecommenderUser)addingUser);  //TODO
+                sess.AddNewUserToMap(userNameRequest,(*GenreRecommenderUser)addingUser);
                 complete();
 
             }
@@ -123,6 +135,9 @@ void Session::start() {
                 sess.AddNewUserToMap(userNameRequest,(LengthRecommenderUser*)addingUser);
                 complete();
 
+            }
+            else{
+             error("illegal reccomandation or already existed username");
             }
 
 
@@ -142,14 +157,13 @@ void Session::start() {
                 input);   //return pointer to user with the same name or null if no such element exists
 
         if (requestedUser != nullptr) {    //this is a legal name
-            sess.setActiveUser(requestedUser);  //TODO ADD FLAG FOR HISTORY AND PRINT...
+            sess.setActiveUser(requestedUser);
             complete();
-//            sess.pushToActionLog(); //TODO
 
         }
     }
 
-    void Session::AddNewUserToMap(string name, User *user_ptr) {    //TODO ADDED, CHECK IT
+    void Session::AddNewUserToMap(string name, User *user_ptr) {
     pair<string,User*> adder(name,user_ptr);
     userMap.insert(adder);
 }
@@ -186,7 +200,7 @@ void DuplicateUser::act(Session &sess) {
         if(newName== nullptr){  //no user with the new name
             string userReqType=requestedUser->getUserRecType(); //string with len, rer or gen
             if(userReqType=="gen"){
-                GenreRecommenderUser CopyAcount(NewUserName,(GenreRecommenderUser*)requestedUser);  //TODO CHECK
+                GenreRecommenderUser CopyAcount(NewUserName,(GenreRecommenderUser*)requestedUser);
             }
             else if(userReqType=="rer"){
                 RerunRecommenderUser CopyAcount(NewUserName,(RerunRecommenderUser*)requestedUser);
@@ -194,9 +208,8 @@ void DuplicateUser::act(Session &sess) {
             else{
                 LengthRecommenderUser CopyAcount(NewUserName,(LengthRecommenderUser*)requestedUser);
             }
-                //TODO ADD FLAG AND ADD TO HISTORY
                 complete();
         }
-//        else{error();}  //todo
+//        else{error();}
     }
 //    else{error();}

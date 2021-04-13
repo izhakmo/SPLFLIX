@@ -11,7 +11,7 @@ User::User(string name,User* ToCopy):name(name) {   //copyConstructor from other
 
 }
 
-User::~User() {history.clear();}    //TODO check the Watchable memory release
+User::~User() {history.clear();}
 
 
 std::vector<Watchable*> User::get_history() const {

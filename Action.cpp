@@ -6,8 +6,8 @@
 BaseAction:: BaseAction():status(PENDING){}
 ActionStatus BaseAction:: getStatus() const { return status;}
 void BaseAction:: complete() {status=COMPLETED;}
-void BaseAction:: error(const std::string &errorMsg) {}  //TODO
-std::string BaseAction:: getErrorMsg() const { return errorMsg;} //TODO
+void BaseAction:: error(const std::string &errorMsg) {}
+std::string BaseAction:: getErrorMsg() const { return errorMsg;}
 void BaseAction:: setStatus(ActionStatus stat){ status=stat;}
 
 void BaseAction::setErrorMsg(string error) {
@@ -22,7 +22,7 @@ string BaseAction::printError() {
 void CreateUser::act(Session &sess) {
     std::string input="user_name";
     std::unordered_map<std::string,User*>::const_iterator got = sess.getUserMap().find (input);
-    if(got==sess.getUserMap().end()){   //TODO userMap doesn't contain the name
+    if(got==sess.getUserMap().end()){   //userMap doesn't contain the name
         std::string input2="recommend";
         if(input2=="len"){
 
@@ -34,7 +34,7 @@ void CreateUser::act(Session &sess) {
 
         }
 
-    }   //TODO  if we got here, then we got an error
+    }   //if we got here, then we got an error
     setStatus(ERROR);
 
     // ChangeActiveUser
