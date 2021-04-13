@@ -29,7 +29,7 @@ std::vector<std::string> Watchable::getTags() const {return _tags;}
 //destructor
 Watchable::~Watchable(){
     _tags.clear();
-}   //TODO CHECK
+}
 
 //copy constructor
 Watchable::Watchable(const Watchable &watch)
@@ -86,7 +86,7 @@ Watchable* Movie::clone() {
 
 
 Episode::Episode(long id, const string &seriesName, int length, int season, int episode,const std::vector<std::string> &tags)
-        :Watchable(id,length,tags),seriesName(seriesName),season(season),episode(episode),nextEpisodeId(){} //TODO NEXTEPISODEID MUST BE CHECKED
+        :Watchable(id,length,tags),seriesName(seriesName),season(season),episode(episode),nextEpisodeId(){} 
 
 string Episode::getEpisodeNumber() const {return "S"+to_string(season)+"E"+to_string(episode);}
 string Episode::getSeriesName() const {return seriesName;}

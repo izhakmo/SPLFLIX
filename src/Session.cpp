@@ -34,11 +34,10 @@ Session::~Session() {
         delete(*it);
     }
     content.clear();
-    for(auto it=actionsLog.begin();it!=actionsLog.end();++it){//TODO
+    for(auto it=actionsLog.begin();it!=actionsLog.end();++it){
         delete(*it);
     }
     actionsLog.clear();
-}//TODO CREATE THE DESTRUCTOR
 
 
 //DEEP COPY
@@ -321,7 +320,7 @@ void Session::start() {
 
         }
         else {
-            cout << "illegal input" << endl;//TODO ADD ERRORS
+            cout << "illegal input" << endl;
 
         }
         }
@@ -336,7 +335,7 @@ void Session::start() {
 
 
 
-void Session::AddNewUserToMap(string name, User *user_ptr) {    //TODO ADDED, CHECK IT
+void Session::AddNewUserToMap(string name, User *user_ptr) {
     pair<string,User*> adder(name,user_ptr);
     userMap.insert(adder);
 }

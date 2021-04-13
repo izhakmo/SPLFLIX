@@ -83,7 +83,7 @@ void CreateUser::act(Session &sess) {
 
             if (sess.getVectorOfWords()[2] == "gen") {    //creat
                 GenreRecommenderUser *addingUser = new GenreRecommenderUser(sess.getVectorOfWords()[1]);
-                sess.AddNewUserToMap(sess.getVectorOfWords()[1], addingUser);  //TODO
+                sess.AddNewUserToMap(sess.getVectorOfWords()[1], addingUser);
                 complete();
                 sess.pushToActionLog(this);
 
@@ -369,11 +369,11 @@ Watch::Watch() {
 Watch::~Watch() {}
 
 void Watch::act(Session &sess) {
-    unsigned ourId = sess.getNeedToWatchId();//TODO CHECK THE INT ARGUMENT
+    unsigned ourId = sess.getNeedToWatchId();
     vector<Watchable *> vcontent = sess.getContentVector();
     if (vcontent.size() < ourId || ourId < 0) {
         setStatus(ERROR);
-        string error = "There is no such content number";//TODO GETERRORMSG
+        string error = "There is no such content number";// GETERRORMSG
         cout << error << endl;
     } else {
         User *user = sess.getActiveUser();
@@ -489,7 +489,7 @@ void DuplicateUser::act(Session &sess) {
                     newUser->copyAcount(requestedUser, sess);;
                 }
 
-                //TODO ADD FLAG AND ADD TO HISTORY
+                //to do ADD FLAG AND ADD TO HISTORY
                 complete();
                 sess.pushToActionLog(this);
             }

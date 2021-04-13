@@ -57,7 +57,7 @@ Watchable* LengthRecommenderUser::getRecommendation(Session &s) {
     vector<Watchable *> historyVec = currentUser->get_history();
     vector<Watchable *> contVec = s.getContentVector();
     int avg = currentUser->getAverage();
-    int min = 1000000000;//TODO
+    int min = 1000000000;
     //Watchable *toReturn = contVec.at(0);
     Watchable* toReturn= nullptr;
     for (auto & i : contVec) {
@@ -177,8 +177,8 @@ GenreRecommenderUser::GenreRecommenderUser(const std::string& name):User(name),p
 
 Watchable* GenreRecommenderUser::getRecommendation(Session &s) {
     vector<Watchable*>&allContent=s.getContentVector();
-    for(auto & i : popGenre){    //todo IIIIIII
-        string popularTag=i.second;  //TODO it will return the tag of the index
+    for(auto & i : popGenre){
+        string popularTag=i.second;  // it will return the tag of the index
 
         for(auto & j : allContent){
             vector<string> contentTags=j->getTags();
@@ -191,7 +191,7 @@ Watchable* GenreRecommenderUser::getRecommendation(Session &s) {
                 }
             }
         }
-    }   //TODO if no such elemet- return null
+    }   // if no such elemet- return null
     return nullptr;
 }
 
